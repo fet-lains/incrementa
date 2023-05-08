@@ -5,7 +5,9 @@
     <h2 class="hero__subtitle">
       A todo app by
 
-      <a href="https://github.com/sharaputo" target="_blank">Sharaputo</a>
+      <a href="https://github.com/sharaputo" class="hero__link" target="_blank">
+        Sharaputo
+      </a>
     </h2>
   </section>
 </template>
@@ -14,16 +16,27 @@
   .hero {
     padding: 0 0 30px;
     &__title {
-      font-size: 44px;
-      letter-spacing: 1.84px;
-      color: @mine-shaft;
+      font-size: 3rem;
+      font-weight: 500;
+      color: @text-primary;
     }
 
     &__subtitle {
       font-size: 1rem;
-      color: @dove-gray;
-      letter-spacing: 0.67px;
+      font-weight: 400;
+      color: @text-secondary;
       margin: 30px 0 0;
+    }
+
+    &__link {
+      color: @theme-color;
+      transition: color @anim-slow;
+
+      @media @hover {
+        &:hover {
+          color: @theme-color-hover;
+        }
+      }
     }
   }
 </style>

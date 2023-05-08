@@ -85,6 +85,7 @@ export default defineStore('tasks', () => {
   const editTask = (taskId: string, value: string) => {
     const taskIndex = getIndex(taskId);
     taskList.value[taskIndex].label = value;
+    taskList.value[taskIndex].edit = false;
 
     taskStorage.setTaskList(taskList.value);
   };

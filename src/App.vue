@@ -2,6 +2,7 @@
   import { ref, computed, onMounted } from 'vue';
 
   import HeroSection from '@/components/HeroSection.vue';
+  import AddTask from './components/tasks/AddTask.vue';
   import TabNav from '@/components/tabs/TabNav.vue';
   import TaskItem from '@/components/tasks/TaskItem.vue';
 
@@ -28,10 +29,8 @@
     currentView.value = viewLabel;
   };
 
-  const addTask = () => {
-    taskStore.addTask(newTaskInput.value);
-
-    newTaskInput.value = '';
+  const addTask = (value: string) => {
+    taskStore.addTask(value);
   };
 
   const setWindowHeight = (): void => {
@@ -49,17 +48,7 @@
   <main class="main-wrapper">
     <HeroSection />
 
-    <div class="new-task">
-      <input
-        type="text"
-        placeholder="Type a new todo"
-        class="new-task__input"
-        v-model="newTaskInput"
-        @keyup.enter="addTask" />
-      <button type="button" class="new-task__button" @click.prevent="addTask">
-        + Add
-      </button>
-    </div>
+    <AddTask v-model="newTaskInput" @add-task="addTask" />
 
     <TabNav
       :currentView="currentView"
@@ -77,63 +66,29 @@
   </main>
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
   html {
-    background-color: @alabaster;
+    background-color: @background;
   }
 
   body {
     min-width: 320px;
     height: calc(var(--vh, 1vh) * 100);
     font-family: @font-primary;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 21px;
+    line-height: 1.2;
     overflow-wrap: break-word;
-    color: @black;
-    background-color: @alabaster;
-    overflow: hidden;
+    color: @text-primary;
+    background-color: @background;
+    overflow-x: hidden;
   }
 
   .main-wrapper {
     max-width: 630px;
     padding: 100px 15px 100px;
     margin: 0 auto;
-  }
-
-  .new-task {
-    display: flex;
-
-    &__input {
-      flex: 1;
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: @mine-shaft;
-      padding: 16px;
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-      border: 1px solid @wild-sand;
-      box-shadow: 1px 1px 4px 0 @silver;
-      transition: border-color @anim-slow;
-
-      &::placeholder {
-        color: @dusty-gray;
-      }
-    }
-
-    &__button {
-      font-size: 1rem;
-      font-weight: 900;
-      color: @white;
-      background-color: @blue;
-      padding: 18px 24px;
-      border: 0;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-      transition: background-color @anim-slow;
-    }
   }
 
   .task-list {
@@ -160,16 +115,6 @@
     100% {
       opacity: 1;
       transform: scale(1);
-    }
-  }
-
-  @media @hover {
-    .new-task__input:hover {
-      border-color: @blue;
-    }
-
-    .new-task__button:hover {
-      background-color: @dark-blue;
     }
   }
 </style>
