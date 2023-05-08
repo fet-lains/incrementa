@@ -67,7 +67,12 @@
       @update-view="setView" />
 
     <ul class="task-list">
-      <TaskItem :tasksInView="tasksInView" />
+      <TransitionGroup name="appear">
+        <TaskItem
+          v-for="taskItem in tasksInView"
+          :key="taskItem.id"
+          :taskItem="taskItem" />
+      </TransitionGroup>
     </ul>
   </main>
 </template>
@@ -135,6 +140,27 @@
     display: grid;
     gap: 16px;
     padding: 0;
+  }
+
+  .appear-enter-active {
+    animation: appear @anim-slow;
+  }
+  .appear-leave-active {
+    position: absolute;
+    animation: appear @anim-slow reverse;
+  }
+  .appear-move {
+    transition: transform @anim-slow;
+  }
+  @keyframes appear {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   @media @hover {

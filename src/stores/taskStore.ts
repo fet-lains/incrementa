@@ -60,12 +60,14 @@ export default defineStore('tasks', () => {
     }
   };
   const addTask = (value: string) => {
-    taskList.value.push({
+    taskList.value.unshift({
       id: uuid(),
       complete: false,
       edit: false,
       label: value,
     });
+
+    taskStorage.setTaskList(taskList.value);
   };
   const getIndex = (taskId: string) => {
     return taskList.value.findIndex((task) => task.id === taskId);
@@ -73,6 +75,7 @@ export default defineStore('tasks', () => {
   const deleteTask = (taskId: string) => {
     const taskIndex = getIndex(taskId);
     taskList.value.splice(taskIndex, 1);
+
     taskStorage.setTaskList(taskList.value);
   };
   const toggleEdit = (taskId: string) => {
@@ -82,11 +85,13 @@ export default defineStore('tasks', () => {
   const editTask = (taskId: string, value: string) => {
     const taskIndex = getIndex(taskId);
     taskList.value[taskIndex].label = value;
+
     taskStorage.setTaskList(taskList.value);
   };
   const toggleComplete = (taskId: string) => {
     const taskIndex = getIndex(taskId);
     taskList.value[taskIndex].complete = !taskList.value[taskIndex].complete;
+
     taskStorage.setTaskList(taskList.value);
   };
 

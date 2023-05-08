@@ -9,7 +9,7 @@
   import store from '@/stores/taskStore';
 
   interface Props {
-    tasksInView: ITaskItem[];
+    taskItem: ITaskItem;
   }
   defineProps<Props>();
 
@@ -17,7 +17,7 @@
 </script>
 
 <template>
-  <li v-for="taskItem in tasksInView" :key="taskItem.id" class="task-item">
+  <li class="task-item">
     <label :for="taskItem.id" class="task-item__checkbox-wrapper">
       <IconCheckCircle v-show="taskItem.complete" />
       <IconCircle v-show="!taskItem.complete" />
