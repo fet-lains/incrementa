@@ -1,9 +1,12 @@
 <script setup lang="ts">
+  import { ref } from 'vue';
+
   import IconCheckCircle from '@/components/icons/IconCheckCircle.vue';
   import IconCircle from '@/components/icons/IconCircle.vue';
   import IconDelete from '@/components/icons/IconDelete.vue';
   import IconEdit from '@/components/icons/IconEdit.vue';
-  import EditInput from '@/components/tasks/EditInput.vue';
+  import IconSave from '@/components/icons/IconSave.vue';
+  import BaseInput from '@/components/base/BaseInput.vue';
 
   import { ITaskItem } from '@/storage/taskStorage';
   import store from '@/stores/taskStore';
@@ -11,16 +14,17 @@
   interface Props {
     taskItem: ITaskItem;
   }
-  defineProps<Props>();
+  const props = defineProps<Props>();
 
   const taskStore = store();
+  const editTaskValue = ref(props.taskItem.label);
 </script>
 
 <template>
   <li class="task-item">
     <label :for="taskItem.id" class="task-item__checkbox-wrapper">
-      <IconCheckCircle v-show="taskItem.complete" />
-      <IconCircle v-show="!taskItem.complete" />
+      <IconCheckCircle class="task-item__check" v-show="taskItem.complete" />
+      <IconCircle class="task-item__circle" v-show="!taskItem.complete" />
 
       <input
         type="checkbox"
@@ -30,11 +34,13 @@
         class="task-item__checkbox" />
     </label>
 
-    <EditInput
+    <BaseInput
       v-if="taskItem.edit"
-      :value="taskItem.label"
-      @input="taskStore.editTask(taskItem.id, $event.target.value)"
-      @keyup.enter="taskStore.toggleEdit(taskItem.id)" />
+      v-model="editTaskValue"
+      :placeholder="'Edit the task'"
+      :isFocused="true"
+      @keyup.enter="taskStore.editTask(taskItem.id, editTaskValue)"
+      @blur="taskStore.editTask(taskItem.id, editTaskValue)" />
 
     <p
       v-else
@@ -45,12 +51,20 @@
 
     <div class="task-item__cta">
       <button
-        v-show="!taskItem.complete"
+        v-show="!taskItem.complete && !taskItem.edit"
         type="button"
         class="task-item__cta-button"
         @click.prevent="taskStore.toggleEdit(taskItem.id)">
         <IconEdit class="task-item__cta-icon" />
         <span class="sr-only">Edit</span>
+      </button>
+      <button
+        v-show="taskItem.edit"
+        type="button"
+        class="task-item__cta-button"
+        @click.prevent="taskStore.editTask(taskItem.id, editTaskValue)">
+        <IconSave class="task-item__cta-icon" />
+        <span class="sr-only">Save</span>
       </button>
       <button
         type="button"
@@ -65,12 +79,13 @@
 
 <style lang="less" scoped>
   .task-item {
-    display: flex;
+    display: grid;
+    grid-template-columns: 30px 1fr 54px;
     align-items: center;
+    gap: 12px;
     padding: 20px;
     border-radius: 8px;
-    border: 1px solid @wild-sand;
-    box-shadow: 2px 2px 8px 0 @alto;
+    border: 1px solid @border;
     transition: border-color @anim-slow;
 
     &__checkbox-wrapper {
@@ -81,28 +96,35 @@
       cursor: pointer;
     }
 
+    &__check {
+      fill: @theme-color;
+    }
+
+    &__circle {
+      fill: @background;
+      stroke: @theme-color;
+    }
+
     &__checkbox {
       position: absolute;
-      left: -3px;
-      bottom: 2px;
+      top: 0;
+      left: 0;
       opacity: 0;
     }
 
     &__text {
-      flex: 1;
-      font-size: 20px;
-      font-weight: 700;
-      border: 0;
-      margin-left: 12px;
+      font-size: 1.2rem;
+      cursor: default;
     }
 
     &__text.is-complete {
       text-decoration: line-through;
-      color: @dove-gray;
+      color: @text-dark;
     }
 
     &__cta {
       display: flex;
+      justify-content: flex-end;
       column-gap: 16px;
     }
 
@@ -112,14 +134,14 @@
     }
 
     &__cta-icon {
-      fill: @mine-shaft;
+      fill: @text-primary;
       transition: fill @anim-fast;
     }
   }
 
   @media @hover {
     .task-item:hover {
-      border-color: @blue;
+      border-color: @theme-color;
 
       .task-item__cta-button {
         opacity: 1;
@@ -127,7 +149,15 @@
     }
 
     .task-item__cta-button:hover .task-item__cta-icon {
-      fill: @blue;
+      fill: @theme-color;
+    }
+  }
+
+  @media @medium-max {
+    .task-item {
+      &__cta-button {
+        opacity: 1;
+      }
     }
   }
 </style>

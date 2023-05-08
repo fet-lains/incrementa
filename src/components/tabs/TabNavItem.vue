@@ -31,22 +31,22 @@
       font-size: 1rem;
       font-weight: 700;
       letter-spacing: 1px;
-      color: #6b6b6b;
+      color: @text-dark;
       transition: color @anim-slow;
     }
 
     &.is-active {
-      border-bottom: 3px solid @blue;
+      border-bottom: 3px solid @theme-color;
     }
 
     &.is-active .tab__button {
-      color: @mine-shaft;
+      color: @text-primary;
     }
   }
 
   @media @hover {
     .tab:not(.is-active):hover .tab__button {
-      color: @mine-shaft;
+      color: @text-primary;
     }
   }
 </style>
