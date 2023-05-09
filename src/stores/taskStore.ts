@@ -30,6 +30,12 @@ export default defineStore('tasks', () => {
 
     return true;
   };
+  const isDesktop = () => {
+    const desktopRes = window.matchMedia('(min-width: 1200px)');
+    const mousePointer = window.matchMedia('(pointer: fine)');
+
+    return desktopRes.matches && mousePointer.matches;
+  };
   const getTasks = async () => {
     if (hasTaskLocal()) {
       taskList.value = taskStorage.getTaskList();
@@ -60,12 +66,21 @@ export default defineStore('tasks', () => {
     }
   };
   const addTask = (value: string) => {
-    taskList.value.unshift({
-      id: uuid(),
-      complete: false,
-      edit: false,
-      label: value,
-    });
+    if (isDesktop()) {
+      taskList.value.unshift({
+        id: uuid(),
+        complete: false,
+        edit: false,
+        label: value,
+      });
+    } else {
+      taskList.value.push({
+        id: uuid(),
+        complete: false,
+        edit: false,
+        label: value,
+      });
+    }
 
     taskStorage.setTaskList(taskList.value);
   };
