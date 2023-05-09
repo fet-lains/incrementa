@@ -90,6 +90,10 @@
     border: 1px solid @border;
     transition: border-color @anim-slow;
 
+    &:focus-within {
+      border-color: @theme-color;
+    }
+
     &__checkbox-wrapper {
       position: relative;
       display: flex;
