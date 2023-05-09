@@ -9,7 +9,6 @@
   import store from '@/stores/taskStore';
 
   const currentView = ref('All');
-  const newTaskInput = ref('');
   const taskStore = store();
 
   const tasksInView = computed(() => {
@@ -48,21 +47,23 @@
   <main class="main-wrapper">
     <HeroSection />
 
-    <AddTask v-model="newTaskInput" @add-task="addTask" />
+    <AddTask @add-task="addTask" />
 
-    <TabNav
-      :currentView="currentView"
-      :tasksList="taskStore.taskListOverview"
-      @update-view="setView" />
+    <div class="tasks">
+      <TabNav
+        :currentView="currentView"
+        :tasksList="taskStore.taskListOverview"
+        @update-view="setView" />
 
-    <ul class="task-list">
-      <TransitionGroup name="appear">
-        <TaskItem
-          v-for="taskItem in tasksInView"
-          :key="taskItem.id"
-          :taskItem="taskItem" />
-      </TransitionGroup>
-    </ul>
+      <ul class="task-list">
+        <TransitionGroup name="appear">
+          <TaskItem
+            v-for="taskItem in tasksInView"
+            :key="taskItem.id"
+            :taskItem="taskItem" />
+        </TransitionGroup>
+      </ul>
+    </div>
   </main>
 </template>
 
@@ -87,8 +88,15 @@
 
   .main-wrapper {
     max-width: 630px;
-    padding: 50px 15px 50px;
+    display: grid;
+    gap: 30px;
+    padding: 50px 15px 100px;
     margin: 0 auto;
+  }
+
+  .tasks {
+    display: grid;
+    gap: 20px;
   }
 
   .task-list {
@@ -120,7 +128,8 @@
 
   @media @small-min {
     .main-wrapper {
-      padding: 100px 15px 100px;
+      gap: 40px;
+      padding-top: 100px;
     }
   }
 </style>

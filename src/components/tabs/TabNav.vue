@@ -40,6 +40,5 @@
   .tab-nav-wrapper {
     display: flex;
     column-gap: 30px;
-    margin: 45px 0 20px;
   }
 </style>

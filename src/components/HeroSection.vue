@@ -14,7 +14,6 @@
 
 <style lang="less" scoped>
   .hero {
-    padding: 0 0 30px;
     &__title {
       font-size: 2rem;
       font-weight: 500;
@@ -25,7 +24,7 @@
       font-size: 0.9rem;
       font-weight: 400;
       color: @text-secondary;
-      margin: 20px 0 0;
+      margin-top: 20px;
     }
 
     &__link {
@@ -47,7 +46,7 @@
       }
 
       &__subtitle {
-        font-size: 1rem;
+        font-size: 1.2rem;
         margin-top: 30px;
       }
     }
