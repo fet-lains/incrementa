@@ -42,7 +42,7 @@
     }
 
     &__button {
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 500;
       color: @text-primary;
       background-color: @theme-color;
@@ -60,6 +60,14 @@
 
     .add-task__button:hover {
       background-color: @theme-color-hover;
+    }
+  }
+
+  @media @small-min {
+    .add-task {
+      &__button {
+        font-size: 1.2rem;
+      }
     }
   }
 </style>

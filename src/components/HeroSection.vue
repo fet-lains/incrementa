@@ -16,16 +16,16 @@
   .hero {
     padding: 0 0 30px;
     &__title {
-      font-size: 3rem;
+      font-size: 2rem;
       font-weight: 500;
       color: @text-primary;
     }
 
     &__subtitle {
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 400;
       color: @text-secondary;
-      margin: 30px 0 0;
+      margin: 20px 0 0;
     }
 
     &__link {
@@ -36,6 +36,19 @@
         &:hover {
           color: @theme-color-hover;
         }
+      }
+    }
+  }
+
+  @media @small-min {
+    .hero {
+      &__title {
+        font-size: 3rem;
+      }
+
+      &__subtitle {
+        font-size: 1rem;
+        margin-top: 30px;
       }
     }
   }

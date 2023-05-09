@@ -42,12 +42,13 @@
       @keyup.enter="taskStore.editTask(taskItem.id, editTaskValue)"
       @blur="taskStore.editTask(taskItem.id, editTaskValue)" />
 
-    <p
-      v-else
-      class="task-item__text"
-      :class="taskItem.complete ? 'is-complete' : ''">
-      {{ taskItem.label }}
-    </p>
+    <div class="task-item__text-wrapper" v-else>
+      <p
+        class="task-item__text"
+        :class="taskItem.complete ? 'is-complete' : ''">
+        {{ taskItem.label }}
+      </p>
+    </div>
 
     <div class="task-item__cta">
       <button
@@ -79,11 +80,12 @@
 
 <style lang="less" scoped>
   .task-item {
+    height: 60px;
     display: grid;
-    grid-template-columns: 30px 1fr 54px;
+    grid-template-columns: 25px 1fr 54px;
     align-items: center;
     gap: 12px;
-    padding: 20px;
+    padding: 0 20px;
     border-radius: 8px;
     border: 1px solid @border;
     transition: border-color @anim-slow;
@@ -94,6 +96,11 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+    }
+
+    &__check,
+    &__circle {
+      width: 100%;
     }
 
     &__check {
@@ -112,8 +119,16 @@
       opacity: 0;
     }
 
+    &__text-wrapper {
+      overflow: hidden;
+    }
+
     &__text {
-      font-size: 1.2rem;
+      font-size: 1rem;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      white-space: pre-wrap;
       cursor: default;
     }
 
@@ -129,11 +144,13 @@
     }
 
     &__cta-button {
+      flex: 0 0 20px;
       opacity: 0;
       transition: opacity @anim-fast;
     }
 
     &__cta-icon {
+      width: 100%;
       fill: @text-primary;
       transition: fill @anim-fast;
     }
@@ -157,6 +174,14 @@
     .task-item {
       &__cta-button {
         opacity: 1;
+      }
+    }
+  }
+
+  @media @small-min {
+    .task-item {
+      &__text {
+        font-size: 1.2rem;
       }
     }
   }

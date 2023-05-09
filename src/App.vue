@@ -87,7 +87,7 @@
 
   .main-wrapper {
     max-width: 630px;
-    padding: 100px 15px 100px;
+    padding: 50px 15px 50px;
     margin: 0 auto;
   }
 
@@ -115,6 +115,12 @@
     100% {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  @media @small-min {
+    .main-wrapper {
+      padding: 100px 15px 100px;
     }
   }
 </style>

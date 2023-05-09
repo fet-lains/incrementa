@@ -42,12 +42,18 @@
 <style lang="less" scoped>
   .base-input {
     width: 100%;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 400;
     color: @text-primary;
 
     &::placeholder {
       color: @placeholder;
+    }
+  }
+
+  @media @small-min {
+    .base-input {
+      font-size: 1.2rem;
     }
   }
 </style>

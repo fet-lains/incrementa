@@ -28,9 +28,8 @@
     padding-bottom: 2px;
 
     &__button {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-size: 0.9rem;
+      font-weight: 500;
       color: @text-dark;
       transition: color @anim-slow;
     }
@@ -47,6 +46,14 @@
   @media @hover {
     .tab:not(.is-active):hover .tab__button {
       color: @text-primary;
+    }
+  }
+
+  @media @small-min {
+    .tab {
+      &__button {
+        font-size: 1rem;
+      }
     }
   }
 </style>
