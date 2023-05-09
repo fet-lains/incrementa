@@ -23,7 +23,10 @@
 <template>
   <li class="task-item">
     <label :for="taskItem.id" class="task-item__checkbox-wrapper">
-      <IconCheckCircle class="task-item__check" v-show="taskItem.complete" />
+      <Transition name="bubble">
+        <IconCheckCircle class="task-item__check" v-show="taskItem.complete" />
+      </Transition>
+
       <IconCircle class="task-item__circle" v-show="!taskItem.complete" />
 
       <input
@@ -157,6 +160,37 @@
       width: 100%;
       fill: @text-primary;
       transition: fill @anim-fast;
+    }
+  }
+
+  .bubble-enter-active {
+    animation: bubble @anim-slow;
+  }
+
+  @keyframes bubble {
+    0% {
+      transform: scale(1);
+    }
+
+    20% {
+      transform: scaleY(0.95) scaleX(1.05);
+    }
+
+    48% {
+      transform: scaleY(1.1) scaleX(0.9);
+    }
+
+    68% {
+      transform: scaleY(0.98) scaleX(1.02);
+    }
+
+    80% {
+      transform: scaleY(1.02) scaleX(0.98);
+    }
+
+    97%,
+    100% {
+      transform: scale(1);
     }
   }
 
