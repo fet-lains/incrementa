@@ -16,10 +16,6 @@
   defineEmits<{
     (event: 'update-view', tabName: string): void;
   }>();
-
-  const test = (value: string) => {
-    console.log(value);
-  };
 </script>
 
 <template>

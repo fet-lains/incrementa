@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, computed, onMounted } from 'vue';
+  import { computed, onMounted } from 'vue';
 
   import HeroSection from '@/components/HeroSection.vue';
   import AddTask from './components/tasks/AddTask.vue';
@@ -8,11 +8,10 @@
 
   import store from '@/stores/taskStore';
 
-  const currentView = ref('All');
   const taskStore = store();
 
   const tasksInView = computed(() => {
-    switch (currentView.value) {
+    switch (taskStore.currentView) {
       case 'Current':
         return taskStore.taskList.filter((item) => !item.complete);
 
@@ -24,14 +23,6 @@
     }
   });
 
-  const setView = (viewLabel: string) => {
-    currentView.value = viewLabel;
-  };
-
-  const addTask = (value: string) => {
-    taskStore.addTask(value);
-  };
-
   const setWindowHeight = (): void => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -39,6 +30,8 @@
 
   onMounted(() => {
     setWindowHeight();
+
+    taskStore.getActiveTab();
     taskStore.getTasks();
   });
 </script>
@@ -47,13 +40,13 @@
   <main class="main-wrapper">
     <HeroSection />
 
-    <AddTask @add-task="addTask" />
+    <AddTask @add-task="taskStore.addTask" />
 
     <div class="tasks">
       <TabNav
-        :currentView="currentView"
+        :currentView="taskStore.currentView"
         :tasksList="taskStore.taskListOverview"
-        @update-view="setView" />
+        @update-view="taskStore.setActiveTab" />
 
       <ul class="task-list">
         <TransitionGroup name="appear">

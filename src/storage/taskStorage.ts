@@ -1,4 +1,5 @@
-export enum IStorageUserKeys {
+export enum IStorageTasksKeys {
+  activeTab = 'activeTab',
   taskList = 'taskList',
 }
 
@@ -10,11 +11,22 @@ export interface ITaskItem {
 }
 
 class TaskStorage {
+  getActiveTab(): string {
+    return JSON.parse(
+      localStorage.getItem(IStorageTasksKeys.activeTab) ?? 'All',
+    );
+  }
+  setActiveTab(activeTab: string) {
+    localStorage.setItem(
+      IStorageTasksKeys.activeTab,
+      JSON.stringify(activeTab),
+    );
+  }
   getTaskList(): ITaskItem[] {
-    return JSON.parse(localStorage.getItem(IStorageUserKeys.taskList) ?? '[]');
+    return JSON.parse(localStorage.getItem(IStorageTasksKeys.taskList) ?? '[]');
   }
   setTaskList(taskList: ITaskItem[]) {
-    localStorage.setItem(IStorageUserKeys.taskList, JSON.stringify(taskList));
+    localStorage.setItem(IStorageTasksKeys.taskList, JSON.stringify(taskList));
   }
 }
 

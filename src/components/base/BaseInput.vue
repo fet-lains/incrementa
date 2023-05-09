@@ -42,6 +42,7 @@
 <style lang="less" scoped>
   .base-input {
     width: 100%;
+    height: 100%;
     font-size: 1rem;
     font-weight: 400;
     color: @text-primary;

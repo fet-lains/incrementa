@@ -8,6 +8,20 @@ import { ITask, taskService } from '@/services/taskService';
 export default defineStore('tasks', () => {
   const isLoading = ref(false);
 
+  const currentView = ref('All');
+  const getActiveTab = () => {
+    const activeTab = taskStorage.getActiveTab();
+
+    if (!activeTab) return;
+
+    currentView.value = activeTab;
+  };
+  const setActiveTab = (activeTab: string) => {
+    currentView.value = activeTab;
+
+    taskStorage.setActiveTab(activeTab);
+  };
+
   const taskList = ref<ITaskItem[]>([]);
   const taskLists = reactive({
     all: computed(() => taskList.value),
@@ -23,7 +37,7 @@ export default defineStore('tasks', () => {
     },
   ]);
 
-  const hasTaskLocal = () => {
+  const hasTasksLocal = () => {
     const tasks = taskStorage.getTaskList();
 
     if (!tasks.length) return false;
@@ -37,7 +51,7 @@ export default defineStore('tasks', () => {
     return desktopRes.matches && mousePointer.matches;
   };
   const getTasks = async () => {
-    if (hasTaskLocal()) {
+    if (hasTasksLocal()) {
       taskList.value = taskStorage.getTaskList();
       return;
     }
@@ -113,6 +127,9 @@ export default defineStore('tasks', () => {
 
   return {
     isLoading,
+    currentView,
+    getActiveTab,
+    setActiveTab,
     taskList,
     taskLists,
     taskListOverview,
