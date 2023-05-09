@@ -117,12 +117,10 @@
   }
   @keyframes appear {
     0% {
-      opacity: 0;
-      transform: scale(0.9);
+      transform: translateY(-20px) rotateX(-180deg);
     }
     100% {
-      opacity: 1;
-      transform: scale(1);
+      transform: translateY(0) rotateX(0deg);
     }
   }
 
