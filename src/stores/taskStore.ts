@@ -37,6 +37,9 @@ export default defineStore('tasks', () => {
       length: computed(() => taskLists.completed.length),
     },
   ]);
+  const areAllTasksComplete = computed(() => {
+    return taskList.value.every((task) => task.complete);
+  });
 
   const hasTasksLocal = () => {
     const tasks = taskStorage.getTaskList();
@@ -116,6 +119,13 @@ export default defineStore('tasks', () => {
 
     taskStorage.setTaskList(taskList.value);
   };
+  const toggleAll = () => {
+    if (areAllTasksComplete.value) {
+      taskList.value.forEach((task) => (task.complete = false));
+    } else {
+      taskList.value.forEach((task) => (task.complete = true));
+    }
+  };
 
   return {
     isLoading,
@@ -125,11 +135,13 @@ export default defineStore('tasks', () => {
     taskList,
     taskLists,
     taskListOverview,
+    areAllTasksComplete,
     getTasks,
     addTask,
     deleteTask,
     toggleEdit,
     editTask,
     toggleComplete,
+    toggleAll,
   };
 });

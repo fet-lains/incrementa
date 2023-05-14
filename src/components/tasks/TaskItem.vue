@@ -208,18 +208,17 @@
     }
   }
 
-  @media @medium-max {
-    .task-item {
-      &__cta-button {
-        opacity: 1;
-      }
-    }
-  }
-
   @media @small-min {
     .task-item {
       &__text {
         font-size: 1.2rem;
+      }
+    }
+  }
+  @media @medium-max {
+    .task-item {
+      &__cta-button {
+        opacity: 1;
       }
     }
   }

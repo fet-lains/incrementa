@@ -5,6 +5,7 @@
   import AddTask from './components/tasks/AddTask.vue';
   import TabNav from '@/components/tabs/TabNav.vue';
   import TaskItem from '@/components/tasks/TaskItem.vue';
+  import TasksToggler from '@/components/tasks/TasksToggler.vue';
 
   import store from '@/stores/taskStore';
 
@@ -21,6 +22,12 @@
       default:
         return taskStore.taskList;
     }
+  });
+
+  const checkButtonText = computed(() => {
+    const areChecked = taskStore.areAllTasksComplete;
+
+    return areChecked ? 'Uncheck all' : 'Check all';
   });
 
   const setWindowHeight = (): void => {
@@ -60,6 +67,16 @@
             :taskItem="taskItem" />
         </TransitionGroup>
       </ul>
+
+      <p class="tasks__text" v-if="!taskStore.taskList.length">
+        Add a new task to start planning!
+      </p>
+
+      <div class="tasks__toggler" v-if="tasksInView.length">
+        <TasksToggler @toggle-tasks="taskStore.toggleAll">
+          {{ checkButtonText }}
+        </TasksToggler>
+      </div>
     </div>
   </main>
 </template>
@@ -92,6 +109,18 @@
   .tasks {
     position: relative;
     margin-top: 10px;
+
+    &__text {
+      margin-top: 15px;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: @text-secondary;
+    }
+
+    &__toggler {
+      text-align: right;
+      margin-top: 15px;
+    }
   }
 
   .task-list {
@@ -104,7 +133,6 @@
     animation: appear @anim-slow;
   }
   .appear-leave-active {
-    position: absolute;
     animation: appear @anim-slow reverse;
   }
   .appear-move {
@@ -122,6 +150,18 @@
   @media @small-min {
     .main-wrapper {
       padding-top: 100px;
+    }
+  }
+  @media @medium-min {
+    .tasks {
+      &__toggler {
+        position: sticky;
+        bottom: 0;
+        right: 0;
+        background-color: @background;
+        padding: 15px 0;
+        z-index: 10;
+      }
     }
   }
 </style>
