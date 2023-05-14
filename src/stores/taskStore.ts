@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 import { ITaskItem, taskStorage } from '@/storage/taskStorage';
 import { ITask, taskService } from '@/services/taskService';
+import { isDesktop } from '@/composables/isDesktop';
 
 export default defineStore('tasks', () => {
   const isLoading = ref(false);
@@ -44,12 +45,6 @@ export default defineStore('tasks', () => {
 
     return true;
   };
-  const isDesktop = () => {
-    const desktopRes = window.matchMedia('(min-width: 1200px)');
-    const mousePointer = window.matchMedia('(pointer: fine)');
-
-    return desktopRes.matches && mousePointer.matches;
-  };
   const getTasks = async () => {
     if (hasTasksLocal()) {
       taskList.value = taskStorage.getTaskList();
@@ -80,20 +75,17 @@ export default defineStore('tasks', () => {
     }
   };
   const addTask = (value: string) => {
+    const task: ITaskItem = {
+      id: uuid(),
+      complete: false,
+      edit: false,
+      label: value,
+    };
+
     if (isDesktop()) {
-      taskList.value.unshift({
-        id: uuid(),
-        complete: false,
-        edit: false,
-        label: value,
-      });
+      taskList.value.unshift(task);
     } else {
-      taskList.value.push({
-        id: uuid(),
-        complete: false,
-        edit: false,
-        label: value,
-      });
+      taskList.value.push(task);
     }
 
     taskStorage.setTaskList(taskList.value);
