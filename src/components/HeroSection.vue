@@ -2,16 +2,14 @@
   <section class="hero">
     <h1 class="hero__title">Incrementa</h1>
 
-    <h2 class="hero__subtitle">
-      Your daily dose of progress
-      <br />
-      <hr />
+    <h2 class="hero__subtitle">Your daily dose of progress</h2>
 
+    <div class="hero__author">
       A planner app by
       <a href="https://github.com/sharaputo" class="hero__link" target="_blank">
         Fedor Sharaputo
       </a>
-    </h2>
+    </div>
   </section>
 </template>
 
@@ -30,6 +28,11 @@
       margin-top: 20px;
     }
 
+    &__author {
+      font-size: 0.9rem;
+      color: @text-secondary;
+    }
+
     &__link {
       color: @theme-color;
       transition: color @anim-slow;
@@ -39,14 +42,6 @@
           color: @theme-color-hover;
         }
       }
-    }
-
-    hr {
-      display: block;
-      height: 1px;
-      width: 216px;
-      background: @text-secondary;
-      margin: 5px 0;
     }
   }
 
@@ -59,6 +54,10 @@
       &__subtitle {
         font-size: 1.2rem;
         margin-top: 30px;
+      }
+
+      &__author {
+        font-size: 1.2rem;
       }
     }
   }
