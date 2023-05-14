@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { computed, onMounted, onUpdated } from 'vue';
+  import { isDesktop } from '@/composables/isDesktop';
 
   import HeroSection from '@/components/HeroSection.vue';
   import AddTask from './components/tasks/AddTask.vue';
@@ -43,7 +44,9 @@
   });
 
   onUpdated(() => {
-    console.log('updated');
+    if (!isDesktop()) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
   });
 </script>
 
