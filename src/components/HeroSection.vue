@@ -1,12 +1,15 @@
 <template>
   <section class="hero">
-    <h1 class="hero__title">Keepcode TODOs</h1>
+    <h1 class="hero__title">Incrementa</h1>
 
     <h2 class="hero__subtitle">
-      A todo app by
+      Your daily dose of progress
+      <br />
+      <hr />
 
+      A planner app by
       <a href="https://github.com/sharaputo" class="hero__link" target="_blank">
-        Sharaputo
+        Fedor Sharaputo
       </a>
     </h2>
   </section>
@@ -36,6 +39,14 @@
           color: @theme-color-hover;
         }
       }
+    }
+
+    hr {
+      display: block;
+      height: 1px;
+      width: 216px;
+      background: @text-secondary;
+      margin: 5px 0;
     }
   }
 
