@@ -19,8 +19,8 @@
 </script>
 
 <template>
-  <nav>
-    <ul class="tab-nav-wrapper">
+  <nav class="tab-nav">
+    <ul class="tab-nav__list">
       <TabNavItem
         v-for="(taskList, i) in tasksList"
         :key="`${i}-${taskList.name}`"
@@ -32,9 +32,26 @@
   </nav>
 </template>
 
-<style scoped>
-  .tab-nav-wrapper {
-    display: flex;
-    column-gap: 30px;
+<style lang="less" scoped>
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: @background;
+    padding: 15px 0;
+    z-index: 10;
+
+    &__list {
+      display: flex;
+      align-items: center;
+      column-gap: 30px;
+    }
+  }
+
+  @media @medium-min {
+    .tab-nav {
+      top: 90px;
+    }
   }
 </style>

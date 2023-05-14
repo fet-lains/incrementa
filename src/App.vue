@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onMounted } from 'vue';
+  import { computed, onMounted, onUpdated } from 'vue';
 
   import HeroSection from '@/components/HeroSection.vue';
   import AddTask from './components/tasks/AddTask.vue';
@@ -33,6 +33,10 @@
 
     taskStore.getActiveTab();
     taskStore.getTasks();
+  });
+
+  onUpdated(() => {
+    console.log('updated');
   });
 </script>
 
@@ -81,15 +85,13 @@
 
   .main-wrapper {
     max-width: 630px;
-    display: grid;
-    gap: 30px;
     padding: 50px 15px 100px;
     margin: 0 auto;
   }
 
   .tasks {
-    display: grid;
-    gap: 20px;
+    position: relative;
+    margin-top: 10px;
   }
 
   .task-list {
@@ -119,7 +121,6 @@
 
   @media @small-min {
     .main-wrapper {
-      gap: 40px;
       padding-top: 100px;
     }
   }

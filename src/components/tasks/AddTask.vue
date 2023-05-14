@@ -37,9 +37,14 @@
 
 <style lang="less" scoped>
   .add-task {
+    left: 0;
+    right: 0;
     display: grid;
     grid-template-columns: 1fr 100px;
     align-items: stretch;
+    background-color: @background;
+    padding: 15px 0;
+    z-index: 10;
 
     &__input {
       display: grid;
@@ -98,15 +103,28 @@
     }
   }
 
+  @media @medium-min {
+    .add-task {
+      position: sticky;
+      top: 0;
+      margin-top: 25px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: @background;
+      }
+    }
+  }
   @media @medium-max {
     .add-task {
       position: fixed;
       bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: @background;
       padding: 15px;
-      z-index: 10;
     }
   }
 </style>
