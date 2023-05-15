@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 import { ITaskItem, taskStorage } from '@/storage/taskStorage';
 import { ITask, taskService } from '@/services/taskService';
-import { isDesktop } from '@/composables/isDesktop';
+import { isDesktop, trimString } from '@/composables/helpers';
 
 export default defineStore('tasks', () => {
   const isLoading = ref(false);
@@ -30,8 +30,14 @@ export default defineStore('tasks', () => {
     completed: computed(() => taskList.value.filter((item) => item.complete)),
   });
   const taskListOverview = reactive([
-    { name: 'All', length: computed(() => taskLists.all.length) },
-    { name: 'Current', length: computed(() => taskLists.current.length) },
+    {
+      name: 'All',
+      length: computed(() => taskLists.all.length),
+    },
+    {
+      name: 'Current',
+      length: computed(() => taskLists.current.length),
+    },
     {
       name: 'Completed',
       length: computed(() => taskLists.completed.length),
@@ -78,11 +84,15 @@ export default defineStore('tasks', () => {
     }
   };
   const addTask = (value: string) => {
+    const newTask = trimString(value);
+
+    if (!newTask) return;
+
     const task: ITaskItem = {
       id: uuid(),
       complete: false,
       edit: false,
-      label: value,
+      label: newTask,
     };
 
     if (isDesktop()) {
@@ -107,8 +117,12 @@ export default defineStore('tasks', () => {
     taskList.value[taskIndex].edit = !taskList.value[taskIndex].edit;
   };
   const editTask = (taskId: string, value: string) => {
+    const task = trimString(value);
+
+    if (!task) return;
+
     const taskIndex = getIndex(taskId);
-    taskList.value[taskIndex].label = value;
+    taskList.value[taskIndex].label = task;
     taskList.value[taskIndex].edit = false;
 
     taskStorage.setTaskList(taskList.value);

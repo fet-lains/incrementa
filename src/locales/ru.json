@@ -1,0 +1,21 @@
+{
+  "home": {
+    "subtitle": "На встречу к цели шаг за шагом",
+    "description": "Планировщик дня от ",
+    "author": "Федора Шарапуто",
+    "no_tasks_text": "Сделайте первый шаг и добавьте новую задачу!",
+    "tabs_all": "Все",
+    "tabs_current": "Текущие",
+    "tabs_completed": "Завершённые"
+  },
+  "forms": {
+    "add_task_button": "Доб",
+    "task_placeholder": "Новая задача",
+    "edit_task_placeholder": "Редактировать задачу",
+    "sr_label_edit": "Редактировать",
+    "sr_label_save": "Сохранить",
+    "sr_label_delete": "Удалить",
+    "tasks_uncheck_button": "Отменить все",
+    "tasks_check_button": "Отметить все"
+  }
+}

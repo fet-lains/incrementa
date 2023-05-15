@@ -1,16 +1,21 @@
 <script setup lang="ts">
   import { computed, onMounted, onUpdated } from 'vue';
-  import { isDesktop } from '@/composables/isDesktop';
+  import { isDesktop } from '@/composables/helpers';
+  import { useI18n } from 'vue-i18n';
 
+  import TheHeader from '@/components/TheHeader.vue';
   import HeroSection from '@/components/HeroSection.vue';
   import AddTask from './components/tasks/AddTask.vue';
   import TabNav from '@/components/tabs/TabNav.vue';
   import TaskItem from '@/components/tasks/TaskItem.vue';
   import TasksToggler from '@/components/tasks/TasksToggler.vue';
 
-  import store from '@/stores/taskStore';
+  import user_store from '@/stores/userStore';
+  import task_store from '@/stores/taskStore';
 
-  const taskStore = store();
+  const userStore = user_store();
+  const taskStore = task_store();
+  const { t } = useI18n();
 
   const tasksInView = computed(() => {
     switch (taskStore.currentView) {
@@ -28,7 +33,9 @@
   const checkButtonText = computed(() => {
     const areChecked = taskStore.areAllTasksComplete;
 
-    return areChecked ? 'Uncheck all' : 'Check all';
+    return areChecked
+      ? `${t('forms.tasks_uncheck_button')}`
+      : `${t('forms.tasks_check_button')}`;
   });
 
   const setWindowHeight = (): void => {
@@ -39,6 +46,7 @@
   onMounted(() => {
     setWindowHeight();
 
+    userStore.getLocale();
     taskStore.getActiveTab();
     taskStore.getTasks();
   });
@@ -51,6 +59,8 @@
 </script>
 
 <template>
+  <TheHeader />
+
   <main class="main-wrapper">
     <HeroSection />
 
@@ -72,7 +82,7 @@
       </ul>
 
       <p class="tasks__text" v-if="!taskStore.taskList.length">
-        Add a new task to start planning!
+        {{ $t('home.no_tasks_text') }}
       </p>
 
       <div class="tasks__toggler" v-if="tasksInView.length">
@@ -105,7 +115,7 @@
 
   .main-wrapper {
     max-width: 630px;
-    padding: 50px 15px 100px;
+    padding: 40px 15px 100px;
     margin: 0 auto;
   }
 

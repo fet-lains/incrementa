@@ -1,5 +1,6 @@
-<script lang="ts" setup>
+<script setup lang="ts">
   import { computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
 
   interface Props {
     isActive: boolean;
@@ -13,12 +14,17 @@
   const tabActiveClass = computed(() => {
     return props.isActive ? 'is-active' : '';
   });
+
+  const { t } = useI18n();
+  const tabLabel = computed(() => {
+    return t(`home.tabs_${props.listName.toLowerCase()}`);
+  });
 </script>
 
 <template>
   <li :class="['tab', tabActiveClass]">
     <button class="tab__button" @click.prevent="$emit('tab-click', listName)">
-      {{ listName }} ({{ listLength }})
+      {{ tabLabel }} ({{ listLength }})
     </button>
   </li>
 </template>

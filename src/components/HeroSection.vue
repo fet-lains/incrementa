@@ -2,12 +2,12 @@
   <section class="hero">
     <h1 class="hero__title">Incrementa</h1>
 
-    <h2 class="hero__subtitle">Your daily dose of progress</h2>
+    <h2 class="hero__subtitle">{{ $t('home.subtitle') }}</h2>
 
     <div class="hero__author">
-      A planner app by
+      {{ $t('home.description') }}
       <a href="https://github.com/sharaputo" class="hero__link" target="_blank">
-        Fedor Sharaputo
+        {{ $t('home.author') }}
       </a>
     </div>
   </section>
@@ -15,6 +15,8 @@
 
 <style lang="less" scoped>
   .hero {
+    position: relative;
+
     &__title {
       font-size: 2rem;
       font-weight: 500;

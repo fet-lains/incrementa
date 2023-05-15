@@ -9,15 +9,20 @@
   import BaseInput from '@/components/base/BaseInput.vue';
 
   import { ITaskItem } from '@/storage/taskStorage';
-  import store from '@/stores/taskStore';
+  import task_store from '@/stores/taskStore';
 
   interface Props {
     taskItem: ITaskItem;
   }
   const props = defineProps<Props>();
 
-  const taskStore = store();
+  const taskStore = task_store();
   const editTaskValue = ref(props.taskItem.label);
+
+  const editTask = (id: string, value: string): void => {
+    taskStore.editTask(id, value);
+    editTaskValue.value = props.taskItem.label;
+  };
 </script>
 
 <template>
@@ -40,10 +45,10 @@
     <BaseInput
       v-if="taskItem.edit"
       v-model="editTaskValue"
-      :placeholder="'Edit the task'"
+      :placeholder="$t('forms.edit_task_placeholder')"
       :isFocused="true"
-      @keyup.enter="taskStore.editTask(taskItem.id, editTaskValue)"
-      @blur="taskStore.editTask(taskItem.id, editTaskValue)" />
+      @keyup.enter="editTask(taskItem.id, editTaskValue)"
+      @blur="editTask(taskItem.id, editTaskValue)" />
 
     <div class="task-item__text-wrapper" v-else>
       <p
@@ -60,22 +65,22 @@
         class="task-item__cta-button"
         @click.prevent="taskStore.toggleEdit(taskItem.id)">
         <IconEdit class="task-item__cta-icon" />
-        <span class="sr-only">Edit</span>
+        <span class="sr-only">{{ $t('forms.sr_label_edit') }}</span>
       </button>
       <button
         v-show="taskItem.edit"
         type="button"
         class="task-item__cta-button"
-        @click.prevent="taskStore.editTask(taskItem.id, editTaskValue)">
+        @click.prevent="editTask(taskItem.id, editTaskValue)">
         <IconSave class="task-item__cta-icon" />
-        <span class="sr-only">Save</span>
+        <span class="sr-only">{{ $t('forms.sr_label_save') }}</span>
       </button>
       <button
         type="button"
         class="task-item__cta-button"
         @click.prevent="taskStore.deleteTask(taskItem.id)">
         <IconDelete class="task-item__cta-icon" />
-        <span class="sr-only">Delete</span>
+        <span class="sr-only">{{ $t('forms.sr_label_delete') }}</span>
       </button>
     </div>
   </li>

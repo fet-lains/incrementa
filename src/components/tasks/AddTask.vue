@@ -22,7 +22,7 @@
       <BaseInput
         v-model="addTaskValue"
         @keyup.enter="addTask"
-        :placeholder="'Type a new todo'" />
+        :placeholder="$t('forms.task_placeholder')" />
 
       <button type="button" class="add-task__clear" @click.prevent="clearInput">
         <IconClear class="add-task__clear-icon" v-show="addTaskValue" />
@@ -30,7 +30,7 @@
     </div>
 
     <button type="button" class="add-task__button" @click.prevent="addTask">
-      + Add
+      + {{ $t('forms.add_task_button') }}
     </button>
   </div>
 </template>
@@ -124,7 +124,7 @@
     .add-task {
       position: fixed;
       bottom: 0;
-      padding: 15px;
+      padding: 15px 15px 30px;
     }
   }
 </style>

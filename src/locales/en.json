@@ -1,0 +1,21 @@
+{
+  "home": {
+    "subtitle": "Your daily dose of progress",
+    "description": " A planner app by ",
+    "author": "Fedor Sharaputo",
+    "no_tasks_text": "Add a new task to start planning!",
+    "tabs_all": "All",
+    "tabs_current": "Current",
+    "tabs_completed": "Completed"
+  },
+  "forms": {
+    "add_task_button": "Add",
+    "task_placeholder": "Type a new task",
+    "edit_task_placeholder": "Edit the task",
+    "sr_label_edit": "Edit",
+    "sr_label_save": "Save",
+    "sr_label_delete": "Delete",
+    "tasks_uncheck_button": "Uncheck all",
+    "tasks_check_button": "Check all"
+  }
+}

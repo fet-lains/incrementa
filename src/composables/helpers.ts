@@ -4,3 +4,7 @@ export const isDesktop = () => {
 
   return desktopRes.matches && mousePointer.matches;
 };
+
+export const trimString = (value: string) => {
+  return value.trimStart().trimEnd();
+};
