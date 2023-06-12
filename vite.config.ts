@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import { fileURLToPath } from 'node:url';
 import vue from '@vitejs/plugin-vue';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
@@ -16,7 +17,21 @@ export default ({ mode }) => {
     optimizeDeps: {
       exclude: ['*-legacy'],
     },
-    plugins: [vue()],
+    plugins: [
+      vue(),
+      VitePWA({
+        manifest: {
+          icons: [
+            {
+              src: '/favicon.svg',
+              sizes: '512x512',
+              type: 'image/svg',
+              purpose: 'any maskable',
+            },
+          ],
+        },
+      }),
+    ],
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
