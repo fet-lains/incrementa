@@ -3,7 +3,7 @@ import { ref, reactive, computed } from 'vue';
 import { v4 as uuid } from 'uuid';
 
 import { ITaskItem, taskStorage } from '@/storage/taskStorage';
-import { isDesktop, trimString } from '@/composables/helpers';
+import { capitalize, isDesktop, trimString } from '@/composables/helpers';
 
 export default defineStore('tasks', () => {
   const isLoading = ref(false);
@@ -63,16 +63,20 @@ export default defineStore('tasks', () => {
 
     isLoading.value = false;
   };
+
+  const newTask = ref('');
   const addTask = (value: string) => {
-    const newTask = trimString(value);
+    newTask.value = trimString(value);
 
     if (!newTask) return;
+
+    newTask.value = capitalize(newTask.value);
 
     const task: ITaskItem = {
       id: uuid(),
       complete: false,
       edit: false,
-      label: newTask,
+      label: newTask.value,
     };
 
     if (isDesktop()) {
