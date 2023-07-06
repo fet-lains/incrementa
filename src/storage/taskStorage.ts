@@ -12,15 +12,10 @@ export interface ITaskItem {
 
 class TaskStorage {
   getActiveTab(): string {
-    return JSON.parse(
-      localStorage.getItem(IStorageTasksKeys.activeTab) ?? 'All',
-    );
+    return localStorage.getItem(IStorageTasksKeys.activeTab) ?? 'All';
   }
   setActiveTab(activeTab: string) {
-    localStorage.setItem(
-      IStorageTasksKeys.activeTab,
-      JSON.stringify(activeTab),
-    );
+    localStorage.setItem(IStorageTasksKeys.activeTab, activeTab);
   }
   getTaskList(): ITaskItem[] {
     return JSON.parse(localStorage.getItem(IStorageTasksKeys.taskList) ?? '[]');
