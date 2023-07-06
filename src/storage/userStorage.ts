@@ -4,10 +4,10 @@ export enum IStorageUserKeys {
 
 class UserStorage {
   getLocale(): string {
-    return JSON.parse(localStorage.getItem(IStorageUserKeys.locale) ?? 'Eng');
+    return localStorage.getItem(IStorageUserKeys.locale) ?? 'ru';
   }
   setLocale(locale: string) {
-    localStorage.setItem(IStorageUserKeys.locale, JSON.stringify(locale));
+    localStorage.setItem(IStorageUserKeys.locale, locale);
   }
 }
 
