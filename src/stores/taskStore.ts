@@ -3,7 +3,6 @@ import { ref, reactive, computed } from 'vue';
 import { v4 as uuid } from 'uuid';
 
 import { ITaskItem, taskStorage } from '@/storage/taskStorage';
-import { ITask, taskService } from '@/services/taskService';
 import { isDesktop, trimString } from '@/composables/helpers';
 
 export default defineStore('tasks', () => {
@@ -55,33 +54,14 @@ export default defineStore('tasks', () => {
     return true;
   };
   const getTasks = async () => {
+    isLoading.value = true;
+
     if (hasTasksLocal()) {
       taskList.value = taskStorage.getTaskList();
       return;
     }
 
-    isLoading.value = true;
-
-    try {
-      const response = await taskService.getTodos();
-
-      if (!response.data) return;
-
-      const data: ITask[] = response.data.splice(0, 10);
-
-      taskList.value = data.map((item) => ({
-        id: uuid(),
-        complete: false,
-        edit: false,
-        label: item.title,
-      }));
-
-      taskStorage.setTaskList(taskList.value);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      isLoading.value = false;
-    }
+    isLoading.value = false;
   };
   const addTask = (value: string) => {
     const newTask = trimString(value);
