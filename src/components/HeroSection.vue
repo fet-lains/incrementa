@@ -1,12 +1,15 @@
 <template>
   <section class="hero">
-    <h1 class="hero__title">Incrementa</h1>
+    <h1 class="hero__title">Incrementã</h1>
 
     <h2 class="hero__subtitle">{{ $t('home.subtitle') }}</h2>
 
     <div class="hero__author">
       {{ $t('home.description') }}
-      <a href="https://github.com/sharaputo" class="hero__link" target="_blank">
+      <a
+        href="https://github.com/sharaputo"
+        class="hero__link"
+        target="_blank">
         {{ $t('home.author') }}
       </a>
     </div>
