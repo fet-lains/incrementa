@@ -10,6 +10,7 @@
 
   const props = withDefaults(defineProps<Props>(), {
     isFocused: false,
+    modelValue: '',
     type: 'text',
   });
 
